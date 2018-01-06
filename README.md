@@ -48,7 +48,7 @@ Than, use the following commands to install Apache2, PHP and myDrop2
 
 ### RUN
 
-http://IP-OF-YOUR-PI/index.html
+http://IP-OF-YOUR-PI/index.php
 
  <br />
  
