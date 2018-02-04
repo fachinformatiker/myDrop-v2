@@ -1,5 +1,8 @@
 <?php
-	include ('scripts/include_variables.php');
+session_start([
+    'cookie_lifetime' => 3600,
+]);
+$data=$_SESSION['data'];
 ?>
 <html>
 <head>
@@ -23,6 +26,7 @@
 <title>
 myDrop2
 </title>
+<script src="scripts/jquery.js"></script>
 </head>
 <body>
 <script>
@@ -33,46 +37,72 @@ function showLoadingMessage() {
   message.innerHTML = '<center><h1>Wird gearbeitet, bitte warten!</h1></center>';
   document.body.appendChild(message);
 }
+function checkRemove() {
+    if ($('div.d1_drops').length == 1) {
+        $('#remove').hide();
+    } else {
+        $('#remove').show();
+    }
+};
+$(document).ready(function() {
+    checkRemove()
+    $('#add').click(function() {
+        $('div.d1_drops:last').after($('div.d1_drops:first').clone());
+        $('div.d2_drops:last').after($('div.d2_drops:first').clone());
+        checkRemove();
+    });
+    $('#remove').click(function() {
+        $('div.d1_drops:last').remove();
+        $('div.d2_drops:last').remove();
+        checkRemove();
+    });
+});
 </script>
+
+<script>
+var data=<?php echo json_encode($data);?>;
+</script>
+
 <center>
 <div id='header'>
    <b>myDrop2</b>
 </div>
 <br><br>
 <div id='content'>
-<form action=scripts/action.php class='pure-form pure-form-aligned' onsubmit='showLoadingMessage();'>
+<br>
+<button id='add'>[ + ]</button>
+<button id='remove'>[ - ]</button>
+<form action=scripts/action.php class='pure-form pure-form-aligned' onsubmit='showLoadingMessage();' method='post'>
+<!-- <form action=scripts/action.php class='pure-form pure-form-aligned' onsubmit='showLoadingMessage();' method='post'> -->
 <div id='settings1'>
 <br>
   Belichtung starten
   <br><br>
-  <label>Warten (ms) <input name='firstwait' type='number' value='<?php echo $content[0]; ?>'></label>
+  <label>Warten (ms) <input name='firstwait' type='number'></label>
 </div>
 
 <div id='ventile'>
-
 <div id='ventil1'>
    <input type='radio' id='v1' name='ventile' value='1' checked='checked'>
    <label for='v1'><h2>1 Ventil</h2></label>
    <br><br>
-  <label>Tropfen 1 Dauer (ms) <input name='v1_d1' type='number' value='<?php echo $v1_content[1]; ?>'></label>
+   <div class='d1_drops'>
+  <label>Tropfen 1 Dauer (ms) <input name='d1_drop[]' type='number'></label>
   <br><br>
-  <label>Warten (ms) <input name='v1_w2' type='number' value='<?php echo $v1_content[2]; ?>'></label>
+  <label>Warten (ms) <input name='d1_wait[]' type='number'></label>
    <br><br>
-  <label>Tropfen 2 Dauer (ms) <input name='v1_d2' type='number' value='<?php echo $v1_content[3]; ?>'></label>
-  <br><br>
-  <label>Warten (ms) <input name='v1_w3' type='number' value='<?php echo $v1_content[4]; ?>'></label>
+  </div>
 </div>
 <div id='ventil2'>
    <input type='radio' id='v2' name='ventile' value='2'>
    <label for='v2'><h2>2 Ventile</h2></label>
    <br><br>
-  <label>Tropfen 1 Dauer (ms) <input name='v2_d1' type='number' value='<?php echo $v2_content[1]; ?>'></label>
+   <div class='d2_drops'>
+  <label>Tropfen 1 Dauer (ms) <input name='d2_drop[]' type='number'></label>
   <br><br>
-  <label>Warten (ms) <input name='v2_w2' type='number' value='<?php echo $v2_content[2]; ?>'></label>
+  <label>Warten (ms) <input name='d2_wait[]' type='number'></label>
   <br><br>
-  <label>Tropfen 2 Dauer (ms) <input name='v2_d2' type='number' value='<?php echo $v2_content[3]; ?>'></label>
-  <br><br>
-  <label>Warten (ms) <input name='v2_w3' type='number' value='<?php echo $v2_content[4]; ?>'></label>
+  </div>
 </div>
 
 </div>
@@ -80,7 +110,7 @@ function showLoadingMessage() {
 <div id='settings2'>
   Blitzen
   <br><br>
-  <label>Warten (ms) <input name='lastwait' type='number' value='<?php echo $content[1]; ?>'></label>
+  <label>Warten (ms) <input name='lastwait' type='number'></label>
   <br><br>
   Belichtung stoppen
   <br><br>
@@ -91,6 +121,14 @@ function showLoadingMessage() {
 <br>
 </div>
 </form>
+<?php 
+if (!isset($_SESSION['visited'])) {
+   echo "Du hast diese Seite noch nicht besucht";
+   $_SESSION['visited'] = true;
+} else {
+   echo "Du hast diese Seite zuvor schon aufgerufen";
+}
+?>
 </div>
 <div id='footer'>
 2018 &copy; <b>Patrick Szalewicz</b> - <a href='http://sysop.top'>SysOp</a>
