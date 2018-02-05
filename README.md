@@ -15,21 +15,23 @@ you will need WiringPi, so install it using this tutorial:
 
 Than, use the following commands to install Apache2, PHP and myDrop2
 
-> sudo apt-get install apache2 php libapache2-mod-php -y
+```
+$ sudo apt-get install apache2 php libapache2-mod-php -y
 
-> wget https://github.com/szalewicz/myDrop2/archive/master.zip
+$ wget https://github.com/szalewicz/myDrop2/archive/master.zip
 
-> unzip master.zip
+$ unzip master.zip
 
-> cd myDrop2-master
+$ cd myDrop2-master
 
-> sudo mv * /var/www/html/
+$ sudo mv * /var/www/html/
 
-> sudo chmod -R 777 /var/www/html/*
+$ sudo chmod -R 777 /var/www/html/*
 
-> sudo adduser www-data gpio
+$ sudo adduser www-data gpio
 
-> sudo systemctl restart apache2
+$ sudo systemctl restart apache2
+```
 
 <br />
 
