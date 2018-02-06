@@ -1,8 +1,10 @@
 <?php
-session_start([
-    'cookie_lifetime' => 3600,
-]);
-$data=$_SESSION['data'];
+session_start();
+$data = $_SESSION['data'];
+$tropfenzahl = $_SESSION['tropfenzahl'];
+$other_data = $_SESSION['array_other_data'];
+$drop_data_v1 = $_SESSION['array_drop_data_v1'];
+$drop_data_v2 = $_SESSION['array_drop_data_v2'];
 ?>
 <html>
 <head>
@@ -26,10 +28,9 @@ $data=$_SESSION['data'];
 <title>
 myDrop2
 </title>
-<script src="scripts/jquery.js"></script>
 </head>
 <body>
-<script>
+<script type="text/javascript">
 function showLoadingMessage() {
   document.getElementById('content').style.display = 'none';
   
@@ -37,32 +38,117 @@ function showLoadingMessage() {
   message.innerHTML = '<center><h1>Wird gearbeitet, bitte warten!</h1></center>';
   document.body.appendChild(message);
 }
-function checkRemove() {
-    if ($('div.d1_drops').length == 1) {
-        $('#remove').hide();
-    } else {
-        $('#remove').show();
-    }
-};
-$(document).ready(function() {
-    checkRemove()
-    $('#add').click(function() {
-        $('div.d1_drops:last').after($('div.d1_drops:first').clone());
-        $('div.d2_drops:last').after($('div.d2_drops:first').clone());
-        checkRemove();
-    });
-    $('#remove').click(function() {
-        $('div.d1_drops:last').remove();
-        $('div.d2_drops:last').remove();
-        checkRemove();
-    });
-});
-</script>
 
-<script>
-var data=<?php echo json_encode($data);?>;
-</script>
+var i_v1 = 0;
+var i_v2 = 0;
+var data = <?php echo json_encode($data, JSON_PRETTY_PRINT) ?>;
+var tropfenzahl = <?php echo json_encode($tropfenzahl, JSON_PRETTY_PRINT) ?>;
+var other_data = <?php echo json_encode($other_data, JSON_PRETTY_PRINT) ?>;
+var drop_data_v1 = <?php echo json_encode($drop_data_v1, JSON_PRETTY_PRINT) ?>;
+var drop_data_v2 = <?php echo json_encode($drop_data_v2, JSON_PRETTY_PRINT) ?>;
 
+function incrementv1() {
+  i_v1 += 1;
+}
+
+function incrementv2() {
+  i_v2 += 1;
+}
+
+function addfieldFunction_blank() {
+	addfieldFunctionv1_blank();
+	addfieldFunctionv2_blank();
+}
+
+function addfieldFunction() {
+	addfieldFunctionv1();
+	addfieldFunctionv2();
+}
+
+function addfieldFunctionv1_blank() {
+  incrementv1();
+	
+  var r = document.createElement('div');
+  var y = document.createElement("INPUT");
+  var z = document.createElement("INPUT");
+  y.setAttribute("class", "");
+  y.setAttribute("type", "number");
+  y.setAttribute("placeholder", "Tropfen Dauer (ms)");
+  y.setAttribute("value", "");
+  z.setAttribute("class", "");
+  z.setAttribute("type", "number");
+  z.setAttribute("placeholder", "Warten (ms)");
+  z.setAttribute("value", "");
+  y.setAttribute("name", "drop_data_v1[" + i_v1 + "][0]");
+  r.appendChild(y);
+  z.setAttribute("name", "drop_data_v1[" + i_v1 + "][1]");
+  r.appendChild(z);
+  document.getElementById("form-div-v1").appendChild(r);
+}
+
+function addfieldFunctionv2_blank() {
+  incrementv2();
+	
+  var r = document.createElement('div');
+  var y = document.createElement("INPUT");
+  var z = document.createElement("INPUT");
+  y.setAttribute("class", "");
+  y.setAttribute("type", "number");
+  y.setAttribute("placeholder", "Tropfen Dauer (ms)");
+  y.setAttribute("value", "");
+  z.setAttribute("class", "");
+  z.setAttribute("type", "number");
+  z.setAttribute("placeholder", "Warten (ms)");
+  z.setAttribute("value", "");
+  y.setAttribute("name", "drop_data_v2[" + i_v2 + "][0]");
+  r.appendChild(y);
+  z.setAttribute("name", "drop_data_v2[" + i_v2 + "][1]");
+  r.appendChild(z);
+  document.getElementById("form-div-v2").appendChild(r);
+}
+
+function addfieldFunctionv1() {
+  incrementv1();
+
+  var r = document.createElement('div');
+  var y = document.createElement("INPUT");
+  var z = document.createElement("INPUT");
+  y.setAttribute("class", "");
+  y.setAttribute("type", "number");
+  y.setAttribute("placeholder", "Tropfen Dauer (ms)");
+  y.setAttribute("value", drop_data_v1[i_v1][0]);
+  z.setAttribute("class", "");
+  z.setAttribute("type", "number");
+  z.setAttribute("placeholder", "Warten (ms)");
+  z.setAttribute("value", drop_data_v1[i_v1][1]);
+  y.setAttribute("name", "drop_data_v1[" + i_v1 + "][0]");
+  r.appendChild(y);
+  z.setAttribute("name", "drop_data_v1[" + i_v1 + "][1]");
+  r.appendChild(z);
+  document.getElementById("form-div-v1").appendChild(r);
+}
+
+function addfieldFunctionv2() {
+  incrementv2();
+	
+  var r = document.createElement('div');
+  var y = document.createElement("INPUT");
+  var z = document.createElement("INPUT");
+  y.setAttribute("class", "");
+  y.setAttribute("type", "number");
+  y.setAttribute("placeholder", "Tropfen Dauer (ms)");
+  y.setAttribute("value", drop_data_v2[i_v2][0]);
+  z.setAttribute("class", "");
+  z.setAttribute("type", "number");
+  z.setAttribute("placeholder", "Warten (ms)");
+  z.setAttribute("value", drop_data_v2[i_v2][1]);
+  y.setAttribute("name", "drop_data_v2[" + i_v2 + "][0]");
+  r.appendChild(y);
+  z.setAttribute("name", "drop_data_v2[" + i_v2 + "][1]");
+  r.appendChild(z);
+  document.getElementById("form-div-v2").appendChild(r);
+}
+</script>
 <center>
 <div id='header'>
    <b>myDrop2</b>
@@ -70,15 +156,13 @@ var data=<?php echo json_encode($data);?>;
 <br><br>
 <div id='content'>
 <br>
-<button id='add'>[ + ]</button>
-<button id='remove'>[ - ]</button>
 <form action=scripts/action.php class='pure-form pure-form-aligned' onsubmit='showLoadingMessage();' method='post'>
 <!-- <form action=scripts/action.php class='pure-form pure-form-aligned' onsubmit='showLoadingMessage();' method='post'> -->
 <div id='settings1'>
 <br>
   Belichtung starten
   <br><br>
-  <label>Warten (ms) <input name='firstwait' type='number'></label>
+  <input type="number" name="other_data[0]" value="<?php echo htmlspecialchars($other_data[0]); ?>" placeholder="Warten (ms)" />
 </div>
 
 <div id='ventile'>
@@ -86,33 +170,31 @@ var data=<?php echo json_encode($data);?>;
    <input type='radio' id='v1' name='ventile' value='1' checked='checked'>
    <label for='v1'><h2>1 Ventil</h2></label>
    <br><br>
-   <div class='d1_drops'>
-  <label>Tropfen 1 Dauer (ms) <input name='d1_drop[]' type='number'></label>
-  <br><br>
-  <label>Warten (ms) <input name='d1_wait[]' type='number'></label>
-   <br><br>
+   <div id="form-div-v1">
+    <input type="number" name="drop_data_v1[0][0]" value="<?php echo htmlspecialchars($drop_data_v1[0][0]); ?>" placeholder="Tropfen Dauer (ms)" />
+	<br>
+    <input type="number" name="drop_data_v1[0][1]" value="<?php echo htmlspecialchars($drop_data_v1[0][1]); ?>" placeholder="Warten (ms)" />
+	<br>
   </div>
 </div>
 <div id='ventil2'>
    <input type='radio' id='v2' name='ventile' value='2'>
    <label for='v2'><h2>2 Ventile</h2></label>
    <br><br>
-   <div class='d2_drops'>
-  <label>Tropfen 1 Dauer (ms) <input name='d2_drop[]' type='number'></label>
-  <br><br>
-  <label>Warten (ms) <input name='d2_wait[]' type='number'></label>
-  <br><br>
+   <div id="form-div-v2">
+    <input type="number" name="drop_data_v2[0][0]" value="<?php echo htmlspecialchars($drop_data_v2[0][0]); ?>" placeholder="Tropfen Dauer (ms)" />
+	<br>
+    <input type="number" name="drop_data_v2[0][1]" value="<?php echo htmlspecialchars($drop_data_v2[0][1]); ?>" placeholder="Warten (ms)" />
+	<br>
   </div>
 </div>
-
 </div>
 
-<div id='settings2'>
+  <div id='settings2'>
   Blitzen
   <br><br>
-  <label>Warten (ms) <input name='lastwait' type='number'></label>
-  <br><br>
-  Belichtung stoppen
+  
+  <input type="number" name="other_data[1]" value="<?php echo htmlspecialchars($other_data[1]); ?>" placeholder="Warten (ms)" />
   <br><br>
 </div>
 <div id='run'>
@@ -121,14 +203,23 @@ var data=<?php echo json_encode($data);?>;
 <br>
 </div>
 </form>
-<?php 
-if (!isset($_SESSION['visited'])) {
-   echo "Du hast diese Seite noch nicht besucht";
-   $_SESSION['visited'] = true;
-} else {
-   echo "Du hast diese Seite zuvor schon aufgerufen";
-}
+
+<div class="dash-add">
+  <button class="dash-add-button" onclick="addfieldFunction_blank()">[+]</button>
+
+  <button class="dash-add-button" onclick="removefieldFunction()">[-]</button>
+</div>
+
+<?php
+	if (isset($tropfenzahl)) {
+		$i = 1;
+		while($i < $tropfenzahl) {
+			echo "<script> addfieldFunction(); </script>";
+			$i++;
+		}
+	}
 ?>
+
 </div>
 <div id='footer'>
 2018 &copy; <b>Patrick Szalewicz</b> - <a href='http://sysop.top'>SysOp</a>
