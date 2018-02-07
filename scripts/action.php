@@ -51,7 +51,7 @@ for($i = 0; $i < $tropfenzahl; $i++) {
 	usleep($lastwait);
 	shell_exec('gpio -1 write '. $kamera .' 0');
 
-	//header('Location: ' . $_SERVER['HTTP_REFERER']);
+	header('Location: ' . $_SERVER['HTTP_REFERER']);
 }
 
 elseif ($_POST['ventile'] == '2') {
@@ -80,7 +80,7 @@ for($i = 0; $i < $tropfenzahl; $i++) {
 	usleep($lastwait);
 	shell_exec('gpio -1 write '. $kamera .' 0');
 
-	//header('Location: ' . $_SERVER['HTTP_REFERER']);
+	header('Location: ' . $_SERVER['HTTP_REFERER']);
 }
 else {
 	echo '<center><h1>Fehler</h1></center>';

@@ -5,7 +5,14 @@ $data = $_SESSION['data'];
 $tropfenzahl = $_SESSION['tropfenzahl'];
 $other_data = $_SESSION['array_other_data'];
 $drop_data_v1 = $_SESSION['array_drop_data_v1'];
-$drop_data_v2 = $_SESSION['array_drop_data_v2']; }
+$drop_data_v2 = $_SESSION['array_drop_data_v2'];
+} else {
+$data = "";
+$tropfenzahl = "1";
+$other_data = "";
+$drop_data_v1 = "";
+$drop_data_v2 = "";
+};
 ?>
 <html>
 <head>
@@ -206,12 +213,10 @@ function addfieldFunctionv2() {
 </form>
 
 <div>
-  <button onclick="addfieldFunction_blank()">[+]</button>
+  <button onclick="addfieldFunction_blank()">[plus]</button>
+  <button onclick="location.href='scripts/remove_one.php';">[minus]</button>
+  <button onclick="location.href='scripts/reset.php';">[reset]</button>
 </div>
-
-<form action="scripts/reset.php">
-    <input type="submit" value="[reset]" />
-</form>
 
 <?php
 	if (isset($tropfenzahl)) {
