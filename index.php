@@ -1,10 +1,11 @@
 <?php
 session_start();
+if ( isset($_SESSION['data'])) {
 $data = $_SESSION['data'];
 $tropfenzahl = $_SESSION['tropfenzahl'];
 $other_data = $_SESSION['array_other_data'];
 $drop_data_v1 = $_SESSION['array_drop_data_v1'];
-$drop_data_v2 = $_SESSION['array_drop_data_v2'];
+$drop_data_v2 = $_SESSION['array_drop_data_v2']; }
 ?>
 <html>
 <head>
@@ -204,11 +205,13 @@ function addfieldFunctionv2() {
 </div>
 </form>
 
-<div class="dash-add">
-  <button class="dash-add-button" onclick="addfieldFunction_blank()">[+]</button>
-
-  <button class="dash-add-button" onclick="removefieldFunction()">[-]</button>
+<div>
+  <button onclick="addfieldFunction_blank()">[+]</button>
 </div>
+
+<form action="scripts/reset.php">
+    <input type="submit" value="[reset]" />
+</form>
 
 <?php
 	if (isset($tropfenzahl)) {
