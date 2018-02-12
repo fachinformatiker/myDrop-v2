@@ -56,6 +56,12 @@ http://IP-OF-YOUR-PI/index.php
  
  <br />
 
+You have to accept any warning about storing session data, otherwise your values can't be transfered to the script and back.
+
+ <br />
+ 
+ <br />
+
  <br />
  
  <br />
