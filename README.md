@@ -1,5 +1,5 @@
-# myDrop2
-myDrop2 - THE ONE AND ONLY Drop Remote for Raspberry Pi (a better version than myDrop)
+# myDrop-v2
+myDrop-v2 - better version of my Drop Remote for Raspberry Pi
 
  <br />
 
@@ -18,7 +18,7 @@ Than, use the following commands to install Apache2, PHP and myDrop2
 ```
 $ sudo apt-get install apache2 php libapache2-mod-php -y
 
-$ wget https://github.com/szalewicz/myDrop2/archive/master.zip
+$ wget https://github.com/szalewicz/myDrop-v2/archive/master.zip
 
 $ unzip master.zip
 
@@ -66,6 +66,6 @@ You have to accept any warning about storing session data, otherwise your values
  
  <br />
 
-If you need help feel free to write my an e-mail: **info@sysop.top**  :speech_balloon:
+If you need help feel free to write my an e-mail: **github@fachinformatiker.app**  :speech_balloon:
 
 :+1:
